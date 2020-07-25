@@ -13,7 +13,7 @@ public abstract class EntityBase {
     private LocalDateTime updatedDate;
 
     @Column(name = "active", nullable = false)
-    private final boolean active;
+    private boolean active;
 
     public EntityBase() {
         this.createdDate = LocalDateTime.now();
@@ -30,5 +30,10 @@ public abstract class EntityBase {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void inactive() {
+        this.active = false;
+        this.updatedDate = LocalDateTime.now();
     }
 }

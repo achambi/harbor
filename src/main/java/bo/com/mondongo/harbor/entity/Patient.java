@@ -1,5 +1,6 @@
 package bo.com.mondongo.harbor.entity;
 
+import bo.com.mondongo.harbor.exception.ResourceNotFoundException;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,9 @@ public class Patient extends Person {
     }
 
     @Override
-    public boolean verify() {
-        return this.verify("patient");
+    public void verify() {
+        if (!this.verify("patient")) {
+            throw new ResourceNotFoundException("Patient does not found.");
+        }
     }
 }

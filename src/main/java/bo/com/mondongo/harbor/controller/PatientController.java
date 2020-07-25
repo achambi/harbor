@@ -4,12 +4,14 @@ import bo.com.mondongo.harbor.payload.request.PatientRequest;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import bo.com.mondongo.harbor.payload.request.RecordRequest;
 import bo.com.mondongo.harbor.payload.response.MessageResponse;
+import bo.com.mondongo.harbor.payload.response.PersonResponse;
 import bo.com.mondongo.harbor.service.IPatientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/patients")
@@ -25,19 +27,32 @@ public class PatientController {
 
     @ApiOperation(value = "Create a patient", response = MessageResponse.class)
     @PostMapping(produces = "application/json", consumes = "application/json")
-    public MessageResponse createAccount(@Valid @RequestBody PatientRequest patientRequest) {
+    public MessageResponse create(@Valid @RequestBody PatientRequest patientRequest) {
         return patientService.create(patientRequest);
     }
 
     @ApiOperation(value = "Update a patient", response = MessageResponse.class)
     @PatchMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public MessageResponse updateAccount(@PathVariable(value = "id") int id, @Valid @RequestBody PersonRequest patientRequest) {
+    public MessageResponse update(@PathVariable(value = "id") int id, @Valid @RequestBody PersonRequest patientRequest) {
         return patientService.update(id, patientRequest);
     }
 
     @ApiOperation(value = "Add record to a patient", response = MessageResponse.class)
-    @PostMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public MessageResponse addRecord(@PathVariable(value = "id") int id, @Valid @RequestBody RecordRequest recordRequest) {
+    @PostMapping(value = "/{id}/record", produces = "application/json", consumes = "application/json")
+    public MessageResponse addRecord(@PathVariable(value = "id") int id,
+                                     @Valid @RequestBody RecordRequest recordRequest) {
         return patientService.addRecord(id, recordRequest);
+    }
+
+    @ApiOperation(value = "Delete a patient", response = MessageResponse.class)
+    @DeleteMapping(value = "/{id}", produces = "application/json")
+    public MessageResponse delete(@PathVariable(value = "id") int id) {
+        return patientService.delete(id);
+    }
+
+    @ApiOperation(value = "Get all patients", response = PersonResponse.class, responseContainer = "List")
+    @GetMapping(produces = "application/json")
+    public Set<PersonResponse> getAll() {
+        return patientService.getAll();
     }
 }

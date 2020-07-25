@@ -9,17 +9,17 @@ import java.io.Serializable;
 public class PersonRequest implements Serializable {
     @NotNull(message = "patient name is required.")
     @ApiModelProperty(required = true, value = "Patient name")
-    @Size(max = 20, message = "patient name must have a maximum of 30 characters.")
+    @Size(max = 20, message = "patient name must have a maximum of 20 characters.")
     private String name;
 
     @NotNull
     @ApiModelProperty(required = true, value = "Patient last name")
-    @Size(max = 20, message = "The account holder must have a maximum of 30 characters.")
+    @Size(max = 20, message = "Patient last name holder must have a maximum of 20 characters.")
     private String lastName;
 
     @NotNull
     @ApiModelProperty(required = true, value = "Patient address")
-    @Size(max = 100, message = "The account holder must have a maximum of 30 characters.")
+    @Size(max = 100, message = "The address holder must have a maximum of 100 characters.")
     private String address;
 
     @NotNull

@@ -1,5 +1,6 @@
 package bo.com.mondongo.harbor.entity;
 
+import bo.com.mondongo.harbor.exception.ResourceNotFoundException;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import org.apache.commons.lang3.StringUtils;
 import javax.persistence.*;
@@ -116,5 +117,11 @@ public abstract class Person extends EntityBase implements Serializable {
         return this.getType().equals(type);
     }
 
-    public abstract boolean verify();
+    public abstract void verify();
+
+    public void verifyActive() {
+        if (!this.isActive()) {
+            throw new ResourceNotFoundException("Patient does not found.");
+        }
+    }
 }

@@ -7,11 +7,13 @@ import bo.com.mondongo.harbor.exception.ResourceNotFoundException;
 import bo.com.mondongo.harbor.payload.request.DoctorRequest;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import bo.com.mondongo.harbor.payload.response.MessageResponse;
+import bo.com.mondongo.harbor.payload.response.PersonResponse;
 import bo.com.mondongo.harbor.repository.IDoctorRepository;
 import bo.com.mondongo.harbor.repository.IPersonRepository;
 import bo.com.mondongo.harbor.repository.ISpecialityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Set;
 
 @Service
 public class DoctorService extends PersonService implements IDoctorService {
@@ -43,5 +45,19 @@ public class DoctorService extends PersonService implements IDoctorService {
                                         .orElseThrow(
                                             () -> new ResourceNotFoundException("Doctor does not exists."));
         return this.update(id, doctor, personRequest);
+    }
+
+    @Override
+    public Set<PersonResponse> getAll() {
+        return this.getAll("doctor");
+    }
+
+    @Override
+    public MessageResponse delete(int id) {
+        Doctor doctor = doctorRepository.findById(id)
+                                        .orElseThrow(
+                                            () -> new ResourceNotFoundException("Doctor does not exists."));
+        doctor.verify();
+        return this.delete(doctor);
     }
 }

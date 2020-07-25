@@ -1,5 +1,6 @@
 package bo.com.mondongo.harbor.entity;
 
+import bo.com.mondongo.harbor.exception.ResourceNotFoundException;
 import bo.com.mondongo.harbor.payload.request.DoctorRequest;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,11 +17,17 @@ public class Doctor extends Person implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "speciality_id"))
     private Set<Specialty> specialities = new HashSet<>();
 
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+    private Set<Record> records;
+
     public Doctor() {
     }
 
-    public boolean verify() {
-        return this.verify("doctor");
+    @Override
+    public void verify() {
+        if (!this.verify("doctor")) {
+            throw new ResourceNotFoundException("Doctor does not found.");
+        }
     }
 
     public Doctor(String name, String lastName, String birthDate, String address) throws ParseException {
@@ -42,5 +49,9 @@ public class Doctor extends Person implements Serializable {
 
     public void setSpecialities(Set<Specialty> specialities) {
         this.specialities = specialities;
+    }
+
+    public Set<Record> getRecords() {
+        return records;
     }
 }

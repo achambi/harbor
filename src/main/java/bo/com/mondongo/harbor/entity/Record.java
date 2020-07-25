@@ -25,15 +25,20 @@ public class Record extends EntityBase implements Serializable {
     @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
     private Patient patient;
 
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", referencedColumnName = "id", nullable = false)
+    private Doctor doctor;
+
     public Record() {
     }
 
-    public Record(Patient patient, RecordRequest recordRequest) throws ParseException {
+    public Record(Patient patient, Doctor doctor, RecordRequest recordRequest) throws ParseException {
         this.description = recordRequest.getDescription();
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         java.util.Date parsed = format.parse(recordRequest.getDate());
         this.recordDate = new java.sql.Date(parsed.getTime());
         this.patient = patient;
+        this.doctor = doctor;
     }
 
     public int getId() {
