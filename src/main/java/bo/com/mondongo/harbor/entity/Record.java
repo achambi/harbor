@@ -1,8 +1,11 @@
 package bo.com.mondongo.harbor.entity;
 
+import bo.com.mondongo.harbor.payload.request.RecordRequest;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 @Entity
 @Table(name = "records")
@@ -21,6 +24,17 @@ public class Record extends EntityBase implements Serializable {
     @ManyToOne
     @JoinColumn(name = "patient_id", referencedColumnName = "id", nullable = false)
     private Patient patient;
+
+    public Record() {
+    }
+
+    public Record(Patient patient, RecordRequest recordRequest) throws ParseException {
+        this.description = recordRequest.getDescription();
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        java.util.Date parsed = format.parse(recordRequest.getDate());
+        this.recordDate = new java.sql.Date(parsed.getTime());
+        this.patient = patient;
+    }
 
     public int getId() {
         return id;

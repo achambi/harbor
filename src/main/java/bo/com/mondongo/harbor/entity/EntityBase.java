@@ -5,18 +5,30 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class EntityBase {
+public abstract class EntityBase {
     @Column(name = "created_date", nullable = false)
-    private LocalDateTime createdDate;
+    private final LocalDateTime createdDate;
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
 
     @Column(name = "active", nullable = false)
-    private boolean active;
+    private final boolean active;
 
     public EntityBase() {
         this.createdDate = LocalDateTime.now();
         this.active = true;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
+    }
+
+    public LocalDateTime getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }
