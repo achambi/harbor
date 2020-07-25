@@ -1,16 +1,15 @@
 package bo.com.mondongo.harbor.entity;
 
-import bo.com.mondongo.harbor.dto.PatientInsertDto;
-import io.swagger.annotations.ApiModel;
+import bo.com.mondongo.harbor.payload.request.PatientRequest;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "patients")
-@ApiModel(value = "AccountDTO", description = "Account model for the documentation")
 public class Patient extends EntityBase implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +31,17 @@ public class Patient extends EntityBase implements Serializable {
     @Column(name = "photo")
     private String photo;
 
-    public Patient(PatientInsertDto patientInsertDto) throws ParseException {
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private Set<Record> records;
+
+    public Patient(PatientRequest patientInsertDto) throws ParseException {
         this.name = patientInsertDto.getName();
         this.lastName = patientInsertDto.getLastName();
         this.address = patientInsertDto.getAddress();
         this.birthDate = new SimpleDateFormat("dd/MM/yyyy").parse(patientInsertDto.getBirthDate());
+    }
+
+    public Patient() {
     }
 
     public int getId() {
@@ -85,5 +90,13 @@ public class Patient extends EntityBase implements Serializable {
 
     public void setPhoto(String photo) {
         this.photo = photo;
+    }
+
+    public Set<Record> getRecords() {
+        return records;
+    }
+
+    public void setRecords(Set<Record> records) {
+        this.records = records;
     }
 }

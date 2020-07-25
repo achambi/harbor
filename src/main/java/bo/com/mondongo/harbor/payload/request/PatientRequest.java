@@ -1,11 +1,12 @@
-package bo.com.mondongo.harbor.dto;
+package bo.com.mondongo.harbor.payload.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class PatientInsertDto implements Serializable {
+public class PatientRequest implements Serializable {
     @NotNull(message = "patient name is required.")
     @ApiModelProperty(required = true, value = "Account holder")
     @Size(max = 20, message = "patient name must have a maximum of 30 characters.")
@@ -24,6 +25,8 @@ public class PatientInsertDto implements Serializable {
     @NotNull
     @ApiModelProperty(required = true, value = "Account holder")
     @Size(max = 10, message = "The birth date must have a maximum of 10 characters.")
+    @Pattern(regexp = "^([0-2][0-9]|(3)[0-1])(\\/)(((0)[0-9])|((1)[0-2]))(\\/)\\d{4}$",
+        message = "Date format is not valid.")
     private String birthDate;
 
     public String getName() {

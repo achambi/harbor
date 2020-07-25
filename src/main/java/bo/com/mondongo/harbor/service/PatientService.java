@@ -1,17 +1,15 @@
 package bo.com.mondongo.harbor.service;
 
 import bo.com.mondongo.harbor.entity.Patient;
+import bo.com.mondongo.harbor.exception.InternalServerErrorException;
+import bo.com.mondongo.harbor.payload.request.PatientRequest;
+import bo.com.mondongo.harbor.payload.response.MessageResponse;
 import bo.com.mondongo.harbor.repository.IPatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 
-@Service("AccountService")
+@Service
 public class PatientService implements IPatientService {
 
     private final IPatientRepository patientRepository;
@@ -23,13 +21,12 @@ public class PatientService implements IPatientService {
 
     @Transactional
     @Override
-    public ResponseEntity<Map<String, Object>> create(Patient patient) throws DataIntegrityViolationException {
+    public MessageResponse create(PatientRequest patient) {
         try {
-            patientRepository.save(patient);
-            Map<String, Object> response = new HashMap<>();
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (DataIntegrityViolationException ex) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            patientRepository.save(new Patient(patient));
+            return new MessageResponse("Patient created successfully");
+        } catch (Exception ex) {
+            throw new InternalServerErrorException();
         }
     }
 //

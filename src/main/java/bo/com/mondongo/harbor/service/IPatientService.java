@@ -1,9 +1,8 @@
 package bo.com.mondongo.harbor.service;
 
-import bo.com.mondongo.harbor.entity.Patient;
-import org.springframework.http.ResponseEntity;
-import java.util.Map;
+import bo.com.mondongo.harbor.payload.request.PatientRequest;
+import bo.com.mondongo.harbor.payload.response.MessageResponse;
 
 public interface IPatientService {
-    ResponseEntity<Map<String, Object>> create(Patient patient);
+    MessageResponse create(PatientRequest patient);
 }
