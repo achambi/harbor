@@ -1,7 +1,7 @@
 package bo.com.mondongo.harbor.service;
 
 import bo.com.mondongo.harbor.entity.Doctor;
-import bo.com.mondongo.harbor.entity.Specialty;
+import bo.com.mondongo.harbor.entity.Speciality;
 import bo.com.mondongo.harbor.exception.InternalServerErrorException;
 import bo.com.mondongo.harbor.exception.ResourceNotFoundException;
 import bo.com.mondongo.harbor.payload.request.DoctorRequest;
@@ -30,7 +30,7 @@ public class DoctorService extends PersonService implements IDoctorService {
     @Override
     public MessageResponse create(DoctorRequest doctorRequest) {
         try {
-            Specialty specialty = specialityRepository.findById(doctorRequest.getSpecialityId()).orElseThrow(
+            Speciality specialty = specialityRepository.findById(doctorRequest.getSpecialityId()).orElseThrow(
                 () -> new ResourceNotFoundException("Speciality does not exists."));
             doctorRepository.save(new Doctor(specialty, doctorRequest));
             return new MessageResponse("Doctor created successfully");

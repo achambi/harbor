@@ -6,16 +6,16 @@ import java.util.Set;
 
 @Entity
 @Table(name = "specialities")
-public class Specialty extends EntityBase implements Serializable {
+public class Speciality extends EntityBase implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", length = 20, nullable = false)
     private String name;
 
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", length = 150, nullable = false)
     private String description;
 
     @Column(name = "avatar")
@@ -23,6 +23,14 @@ public class Specialty extends EntityBase implements Serializable {
 
     @ManyToMany(mappedBy = "specialities")
     private Set<Doctor> doctors;
+
+    public Speciality() {
+    }
+
+    public Speciality(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 
     public int getId() {
         return id;

@@ -15,7 +15,7 @@ public class Doctor extends Person implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "doctors_specialities", joinColumns = @JoinColumn(name = "doctor_id"),
         inverseJoinColumns = @JoinColumn(name = "speciality_id"))
-    private Set<Specialty> specialities = new HashSet<>();
+    private Set<Speciality> specialities = new HashSet<>();
 
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
     private Set<Record> records;
@@ -34,7 +34,7 @@ public class Doctor extends Person implements Serializable {
         super(name, lastName, birthDate, address, "doctor");
     }
 
-    public Doctor(Specialty specialty, DoctorRequest doctorRequest) throws ParseException {
+    public Doctor(Speciality specialty, DoctorRequest doctorRequest) throws ParseException {
         this(doctorRequest.getName(),
              doctorRequest.getLastName(),
              doctorRequest.getBirthDate(),
@@ -43,11 +43,11 @@ public class Doctor extends Person implements Serializable {
         this.specialities.add(specialty);
     }
 
-    public Set<Specialty> getSpecialities() {
+    public Set<Speciality> getSpecialities() {
         return specialities;
     }
 
-    public void setSpecialities(Set<Specialty> specialities) {
+    public void setSpecialities(Set<Speciality> specialities) {
         this.specialities = specialities;
     }
 
