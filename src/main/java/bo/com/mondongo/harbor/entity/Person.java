@@ -34,11 +34,20 @@ public abstract class Person extends EntityBase implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @ManyToOne
+    @JoinColumn(name = "hospital_id", referencedColumnName = "id", nullable = false)
+    private Hospital hospital;
+
     public Person() {
 
     }
 
-    public Person(String name, String lastName, String birthDate, String address, String type) throws ParseException {
+    public Person(String name,
+                  String lastName,
+                  String birthDate,
+                  String address,
+                  String type,
+                  Hospital hospital) throws ParseException {
         this.name = name;
         this.lastName = lastName;
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -46,6 +55,7 @@ public abstract class Person extends EntityBase implements Serializable {
         this.birthDate = new java.sql.Date(birthDateParsed.getTime());
         this.address = address;
         this.type = type;
+        this.hospital = hospital;
     }
 
     public int getId() {

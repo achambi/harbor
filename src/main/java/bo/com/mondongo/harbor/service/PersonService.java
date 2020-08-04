@@ -4,12 +4,14 @@ import bo.com.mondongo.harbor.entity.Person;
 import bo.com.mondongo.harbor.exception.InternalServerErrorException;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import bo.com.mondongo.harbor.payload.response.MessageResponse;
+import bo.com.mondongo.harbor.payload.response.OptionResponse;
 import bo.com.mondongo.harbor.payload.response.PersonResponse;
 import bo.com.mondongo.harbor.repository.IPersonRepository;
-import java.util.Set;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public abstract class PersonService implements IPersonService {
-    private final IPersonRepository personRepository;
+    protected final IPersonRepository personRepository;
 
     PersonService(IPersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -28,8 +30,8 @@ public abstract class PersonService implements IPersonService {
     }
 
     @Override
-    public Set<PersonResponse> getAll(String type) {
-        return personRepository.getAll(type);
+    public Page<PersonResponse> getAll(String type, int hospitalId, int page, int limit) {
+        return personRepository.getAll(type, hospitalId, PageRequest.of(page, limit));
     }
 
     @Override

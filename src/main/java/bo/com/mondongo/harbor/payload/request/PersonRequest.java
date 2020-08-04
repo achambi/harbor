@@ -29,6 +29,10 @@ public class PersonRequest implements Serializable {
         message = "Date format is not valid.")
     private String birthDate;
 
+    @NotNull
+    @ApiModelProperty(required = true, value = "Hotel Id required")
+    private int hospitalId;
+
     public String getName() {
         return name;
     }
@@ -59,5 +63,13 @@ public class PersonRequest implements Serializable {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public int getHospitalId() {
+        return hospitalId;
+    }
+
+    public void setHospitalId(int hospitalId) {
+        this.hospitalId = hospitalId;
     }
 }

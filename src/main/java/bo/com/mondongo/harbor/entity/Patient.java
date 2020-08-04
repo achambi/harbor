@@ -18,12 +18,13 @@ public class Patient extends Person {
     public Patient() {
     }
 
-    public Patient(PersonRequest personRequest) throws ParseException {
+    public Patient(PersonRequest personRequest, Hospital hospital) throws ParseException {
         super(personRequest.getName(),
               personRequest.getLastName(),
               personRequest.getBirthDate(),
               personRequest.getAddress(),
-              "patient"
+              "patient",
+              hospital
         );
     }
 

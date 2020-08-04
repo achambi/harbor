@@ -7,4 +7,5 @@ import java.io.Serializable;
 
 @Repository
 public interface IPatientRepository extends JpaRepository<Patient, Serializable> {
+
 }

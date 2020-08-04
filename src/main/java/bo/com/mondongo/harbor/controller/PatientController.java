@@ -4,6 +4,7 @@ import bo.com.mondongo.harbor.payload.request.PatientRequest;
 import bo.com.mondongo.harbor.payload.request.PersonRequest;
 import bo.com.mondongo.harbor.payload.request.RecordRequest;
 import bo.com.mondongo.harbor.payload.response.MessageResponse;
+import bo.com.mondongo.harbor.payload.response.PatientResponse;
 import bo.com.mondongo.harbor.payload.response.PersonResponse;
 import bo.com.mondongo.harbor.service.IPatientService;
 import io.swagger.annotations.Api;
@@ -11,7 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/patients")
@@ -33,7 +34,8 @@ public class PatientController {
 
     @ApiOperation(value = "Update a patient", response = MessageResponse.class)
     @PatchMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
-    public MessageResponse update(@PathVariable(value = "id") int id, @Valid @RequestBody PersonRequest patientRequest) {
+    public MessageResponse update(@PathVariable(value = "id") int id,
+                                  @Valid @RequestBody PersonRequest patientRequest) {
         return patientService.update(id, patientRequest);
     }
 
@@ -50,9 +52,11 @@ public class PatientController {
         return patientService.delete(id);
     }
 
-    @ApiOperation(value = "Get all patients", response = PersonResponse.class, responseContainer = "List")
-    @GetMapping(produces = "application/json")
-    public Set<PersonResponse> getAll() {
-        return patientService.getAll();
+    @ApiOperation(value = "Get all records of a patient", response = PersonResponse.class,
+        responseContainer = "List")
+    @GetMapping(value = "{id}/records", produces = "application/json")
+    public List<PatientResponse> getAll(
+        @PathVariable(value = "id") int id) {
+        return patientService.getRecords(id);
     }
 }

@@ -5,14 +5,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-public class SpecialityRequest implements Serializable {
-    @NotNull(message = "Speciality id can not be null.")
-    @ApiModelProperty(required = true, value = "Speciality name")
+public class GeneralRequest implements Serializable {
+    @NotNull(message = "Name id can not be null.")
+    @ApiModelProperty(required = true, value = "Name")
     @Size(max = 20, message = "record name must have a maximum of 200 characters.")
     private String name;
 
-    @NotNull(message = "Speciality Description can not be null.")
-    @ApiModelProperty(required = true, value = "Record description")
+    @NotNull(message = "Description can not be null.")
+    @ApiModelProperty(required = true, value = "Description")
     @Size(max = 150, message = "record name must have a maximum of 200 characters.")
     private String description;
 

@@ -16,18 +16,32 @@ public class PersonResponse implements Serializable {
     private String lastName;
 
     @ApiModelProperty(required = true, value = "birth date")
-    private String birthBate;
+    private String birthDate;
 
     @ApiModelProperty(required = true, value = "address")
     private String address;
 
-    public PersonResponse(int id, String name, String lastName, Date birthBate, String address) {
+    @ApiModelProperty(required = true, value = "hospital")
+    private String hospital;
+
+    @ApiModelProperty(required = true, value = "type")
+    private String type;
+
+    public PersonResponse(int id,
+                          String name,
+                          String lastName,
+                          Date birthDate,
+                          String address,
+                          String hospital,
+                          String type) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-        this.birthBate = formatter.format(birthBate);
+        this.birthDate = formatter.format(birthDate);
         this.address = address;
+        this.hospital = hospital;
+        this.type = type;
     }
 
     public int getId() {
@@ -42,11 +56,19 @@ public class PersonResponse implements Serializable {
         return lastName;
     }
 
-    public String getBirthBate() {
-        return birthBate;
+    public String getBirthDate() {
+        return birthDate;
     }
 
     public String getAddress() {
         return address;
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public String getType() {
+        return type;
     }
 }

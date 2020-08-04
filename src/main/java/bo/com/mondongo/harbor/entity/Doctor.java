@@ -30,21 +30,26 @@ public class Doctor extends Person implements Serializable {
         }
     }
 
-    public Doctor(String name, String lastName, String birthDate, String address) throws ParseException {
-        super(name, lastName, birthDate, address, "doctor");
+    public Doctor(String name, String lastName, String birthDate, String address, Hospital hospital) throws ParseException {
+        super(name, lastName, birthDate, address, "doctor", hospital);
     }
 
-    public Doctor(Speciality specialty, DoctorRequest doctorRequest) throws ParseException {
+    public Doctor(Hospital hospital, Speciality specialty, DoctorRequest doctorRequest) throws ParseException {
         this(doctorRequest.getName(),
              doctorRequest.getLastName(),
              doctorRequest.getBirthDate(),
-             doctorRequest.getAddress()
+             doctorRequest.getAddress(),
+             hospital
         );
         this.specialities.add(specialty);
     }
 
     public Set<Speciality> getSpecialities() {
         return specialities;
+    }
+
+    public void addSpeciality(Speciality speciality){
+        specialities.add(speciality);
     }
 
     public void setSpecialities(Set<Speciality> specialities) {
