@@ -1,5 +1,6 @@
 package bo.com.mondongo.harbor.repository;
 
+import bo.com.mondongo.harbor.entity.Doctor;
 import bo.com.mondongo.harbor.entity.Hospital;
 import bo.com.mondongo.harbor.payload.response.HospitalResponse;
 import bo.com.mondongo.harbor.payload.response.OptionResponse;
@@ -22,4 +23,6 @@ public interface IHospitalRepository extends PagingAndSortingRepository<Hospital
         "FROM Hospital h where h.active = true ",
         countQuery = "SELECT count(h.id) from Hospital h where h.active = true ")
     Page<HospitalResponse> getAll(Pageable pageable);
+
+    Hospital findByName(String name);
 }
